@@ -55,7 +55,7 @@ def imprimir(df, nome):
     print(stats)
 
 
-#===================== original
+#============================================== original
 imprimir(X, "Original")
 
 
@@ -63,27 +63,27 @@ def normaliza(arr):
     return (arr - arr.min(axis=0)) / (arr.max(axis=0) - arr.min(axis=0))
 
 
-#============== MinMax personalizado
+#=============== MinMax personalizado
 transf_custom = FunctionTransformer(normaliza)
 X_custom = pd.DataFrame(transf_custom.fit_transform(X), columns=X.columns)
 imprimir(X_custom, "Normalização personalizada(MinMaxScaler)")
 
-#============== PowerTransform
+#=================================== PowerTransform
 pt = PowerTransformer(method="yeo-johnson")
 X_pt = pd.DataFrame(pt.fit_transform(X), columns=X.columns)
 imprimir(X_pt, "PowerTransform")
 
-#============== MinMaxScaler
+#========================================= MinMaxScaler
 mm = MinMaxScaler()
 X_mm = pd.DataFrame(mm.fit_transform(X), columns=X.columns)
 imprimir(X_mm, "MinMaxScaler")
 
-#============== StandardScaler
+#====================== StandardScaler
 ss = StandardScaler()
 X_ss = pd.DataFrame(ss.fit_transform(X), columns=X.columns)
 imprimir(X_ss, "StandardScaler")
 
-#============== l2
+#=================================== l2
 l2 = Normalizer(norm="l2")
 X_l2 = pd.DataFrame(l2.fit_transform(X), columns=X.columns)
 imprimir(X_l2, "L2 por amostra")
