@@ -10,7 +10,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
-# ---------- Questão 1: carregar dados + TF-IDF ----------
 ROOT = Path(__file__).parent / "mdb"
 TRAIN_DIR = ROOT / "train"
 TEST_DIR = ROOT / "test"
