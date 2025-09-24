@@ -51,16 +51,6 @@ def initial_analysis(df: pd.DataFrame) -> str:
     texto.append("=== 1) Análise Inicial — Mall Customer Segmentation Data ===")
     texto.append(f"Dimensões: {linhas} linhas x {colunas} colunas")
     texto.append(f"Colunas: {cols}")
-    texto.append("Variáveis úteis para clusterização:")
-    texto.append(" - 'Age' (idade) — comportamento por faixa etária;")
-    texto.append(" - 'Annual Income (k$)' (renda anual) — poder aquisitivo;")
-    texto.append(" - 'Spending Score (1-100)' — perfil de gasto;")
-    texto.append(" - 'Gender' pode ser codificado e incluído (impacto geralmente menor).")
-    texto.append("Objetivos típicos para K-Means:")
-    texto.append(" - Descobrir segmentos de clientes com perfis de consumo distintos;")
-    texto.append(" - Apoiar marketing segmentado e ações de fidelização;")
-    texto.append(" - Entender padrões de consumo para alocação de recursos.")
-    texto.append("Observação: K-Means assume clusters mais ou menos esféricos e com variâncias semelhantes.")
     return "\n".join(texto)
 
 
@@ -207,31 +197,6 @@ def heatmap_with_row_dendrogram(X: np.ndarray, method: str, metric_label: str = 
 
     plt.show()
     plt.close()
-
-
-def explain_linkages() -> str:
-    txt = []
-    txt.append("=== 4) Comportamento por método de linkage ===")
-    txt.append("- ward: minimiza o aumento da variância intra-cluster a cada fusão;")
-    txt.append("        tende a formar grupos compactos e de tamanho semelhante (requer distância euclidiana).")
-    txt.append("- average: usa a distância média entre todos os pares de pontos de dois clusters;")
-    txt.append("           mais equilibrado que 'single', menos compacto que 'complete'.")
-    txt.append("- single: usa a menor distância entre quaisquer pontos de dois clusters;")
-    txt.append("          propenso a 'chaining' (encadeamento), clusters alongados e sensível a ruído/outliers.")
-    txt.append("- complete: usa a maior distância entre quaisquer pontos de dois clusters;")
-    txt.append("            favorece grupos compactos, mas pode quebrar clusters maiores na presença de outliers.")
-    return "\n".join(txt)
-
-
-def kmeans_failure_notes() -> str:
-    txt = []
-    txt.append("=== 2) Quando o K-Means pode falhar? ===")
-    txt.append("- Clusters não esféricos (anel, lua crescente);")
-    txt.append("- Tamanhos/densidades muito diferentes;")
-    txt.append("- Outliers (centroides são sensíveis);")
-    txt.append("- Escalas muito diferentes entre features (padronize!);")
-    txt.append("- k inadequado.")
-    return "\n".join(txt)
 
 
 # -------------------------------
@@ -387,6 +352,8 @@ def main():
     # 4) Agglomerative Clustering com diferentes linkages
     linkages = ["ward", "average", "single", "complete"]
     print("\n=== 4) Agglomerative Clustering (ward, average, single, complete) ===")
+    print("\n=== 5) Dendrogramas ===")
+    print("\n=== 6) Mapa de Calor com Dendrograma ===")
     ag_labels = {}
     ag_sils = {}
     for link in linkages:
@@ -403,12 +370,6 @@ def main():
         heatmap_with_row_dendrogram(X, method=link)
 
     # Textos explicativos
-    print("\n" + kmeans_failure_notes())
-    print("\n" + explain_linkages())
-    print("\n=== 5) Dendrogramas ===")
-    print("Observe a altura dos cortes horizontais sugerindo um número de clusters.")
-    print("\n=== 6) Mapa de Calor com Dendrograma ===")
-    print("As amostras são reordenadas pelo dendrograma, revelando blocos (padrões) por feature.")
 
     # -------------------------------
     # 7) DBSCAN: make_swiss_roll
